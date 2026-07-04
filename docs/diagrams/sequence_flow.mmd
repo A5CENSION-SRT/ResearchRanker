@@ -1,0 +1,43 @@
+sequenceDiagram
+    autonumber
+    actor User as Researcher / Student
+    participant UI as Flask Web Frontend
+    participant App as Flask Controller (app.py)
+    participant Reader as PDF Extractor (fitz)
+    participant CORE as CORE AC API (v3)
+    participant LLM as Ollama Engine (Phi4/Gemma3)
+    participant SBERT as S-BERT Model (MiniLM)
+    participant DB as SQLite Database
+
+    User->>UI: Access ResearchRanker Portal
+    UI->>App: GET /login or OAuth Callback
+    App->>DB: Query User Record / Validate Session
+    DB-->>App: Session Confirmed
+    App-->>UI: Render User Workspace
+
+    rect rgb(219, 234, 254)
+        note right of User: Phase 1: Paper Comparison & Template Check
+        User->>UI: Upload User & Reference PDFs
+        UI->>App: POST /compare-papers (Multi-part upload)
+        App->>Reader: Extract Text Streams (fitz.open)
+        Reader-->>App: Raw Text Content
+        App->>LLM: comparePDF(reference, user, aimodel)
+        LLM-->>App: Structured Methodology Analysis
+        App-->>UI: Render Comparison Results Page
+    end
+
+    rect rgb(254, 243, 199)
+        note right of User: Phase 2: Plagiarism Detection & Corpus Search
+        User->>UI: Upload Draft PDF for Plagiarism Audit
+        UI->>App: POST /check-plagarism
+        App->>LLM: extract_title(first_page_text)
+        LLM-->>App: Candidate Paper Titles
+        App->>CORE: coreAPICall(title, limit=15)
+        CORE-->>App: Open Access PDF Downloads (URLs)
+        App->>Reader: Download & Extract Reference PDF Bytes
+        Reader-->>App: Aggregated Corpus Text
+        App->>SBERT: compute_similarity(user_text, corpus_text)
+        SBERT-->>App: Cosine Distance & Match Percentage
+        App->>DB: Store Audit Log Result
+        App-->>UI: Display Plagiarism Score & Report
+    end

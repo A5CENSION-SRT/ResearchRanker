@@ -35,8 +35,8 @@
     <nav class="nav-container">
             <ul class = "logobar">
               <li class="logo"><a href="home"><img width="75px" height="75px" src="{{url_for('static', filename='images/Logo.png')}}"></a></li>
-              <li id="title1">Research</a></li>
-              <li id="title2">Rankers</a></li>     
+              <li id="title1">Research</li>
+              <li id="title2">Ranker</li>     
             </ul>
           <ul class = "navbar">
               <li ><a{%if logged_in %} href="home" {%else%} href="signup"{%endif%} id="overview">Overview</a></li> 
@@ -48,7 +48,7 @@
     {% block content %}{% endblock %}
 
     <div class="block4">
-        <div class="copyright">Copyright © 2025 ResearchRankers. All rights reserved.</div>
+        <div class="copyright">Copyright (C) 2025 ResearchRanker. All rights reserved.</div>
 
     </div>
     

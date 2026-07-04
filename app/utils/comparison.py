@@ -57,7 +57,7 @@ def compareTemplate(template,user,aimodel):
          - Visual element positioning (%)
     
     3. **Scoring Algorithm**  
-       `Final Score = (Hierarchy × 0.4) + (Formatting × 0.3) + (Layout × 0.2) + (Elements × 0.1)`
+       `Final Score = (Hierarchy * 0.4) + (Formatting * 0.3) + (Layout * 0.2) + (Elements * 0.1)`
     
     **Output Format:**
     - Numerical rating (1-10 scale)
@@ -69,7 +69,7 @@ def compareTemplate(template,user,aimodel):
     **Example Output:**
     `Rating: 7.8/10  
     Alignment: 78 percent  
-    Discrepancies: 1) Heading hierarchy mismatch (3 levels vs 4) 2) Margin variance (±12%) 3) Table positioning deviation  
+    Discrepancies: 1) Heading hierarchy mismatch (3 levels vs 4) 2) Margin variance (+/-12%) 3) Table positioning deviation  
     Matches: 1) Page numbering 2) Paragraph spacing 3) Footer content positioning  
     Confidence: 92%`
     

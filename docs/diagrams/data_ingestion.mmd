@@ -1,0 +1,41 @@
+graph TB
+    subgraph Input ["Document Upload"]
+        PDF["User Research PDF"]
+    end
+
+    subgraph Extraction ["Header & Text Extraction"]
+        PAGE1["First Page Extractor<br/>(fitz.open stream)"]
+        TITLE_GEN["Title Extractor Prompt<br/>(Ollama Gemma3:4b)"]
+    end
+
+    subgraph CorpusIngestion ["Corpus Ingestion Pipeline"]
+        CORE_API["CORE AC Search API<br/>(q=Title, limit=15)"]
+        FILTER["PDF URL Validator"]
+        FETCH["Asynchronous Byte Fetcher"]
+        AGGREGATE["Corpus Text Aggregator"]
+    end
+
+    subgraph VectorProcessing ["Semantic Similarity Pipeline"]
+        TOKENIZE["Sentence Tokenizer<br/>(nltk sent_tokenize)"]
+        SBERT_MODEL["SentenceTransformer<br/>(all-MiniLM-L6-v2)"]
+        COSINE["Cosine Similarity Matrix<br/>(sklearn metrics)"]
+        SCORE["Similarity Percentage"]
+    end
+
+    PDF --> PAGE1
+    PAGE1 --> TITLE_GEN
+    TITLE_GEN -->|Derived Titles| CORE_API
+    CORE_API --> FILTER
+    FILTER -->|PDF Links| FETCH
+    FETCH --> AGGREGATE
+    AGGREGATE --> TOKENIZE
+    PDF --> TOKENIZE
+    TOKENIZE --> SBERT_MODEL
+    SBERT_MODEL --> COSINE
+    COSINE --> SCORE
+
+    %% Styling
+    style Input fill:#dbeafe,stroke:#1e40af,stroke-width:2px
+    style Extraction fill:#f3e8ff,stroke:#6b21a8,stroke-width:2px
+    style CorpusIngestion fill:#fef3c7,stroke:#b45309,stroke-width:2px
+    style VectorProcessing fill:#dcfce7,stroke:#15803d,stroke-width:2px

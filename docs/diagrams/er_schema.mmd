@@ -1,0 +1,45 @@
+erDiagram
+    USER ||--o{ ANALYSIS_SESSION : initiates
+    USER ||--o{ OAUTH_ACCOUNT : links
+    ANALYSIS_SESSION ||--o{ PLAGIARISM_REPORT : generates
+    ANALYSIS_SESSION ||--o{ COMPARISON_REPORT : generates
+
+    USER {
+        int id PK
+        string username UK
+        string email UK
+        string password_hash
+        datetime created_on
+    }
+
+    OAUTH_ACCOUNT {
+        int id PK
+        int user_id FK
+        string provider
+        string oauth_token
+        string refresh_token
+        datetime created_at
+    }
+
+    ANALYSIS_SESSION {
+        string session_id PK
+        int user_id FK
+        string user_paper_name
+        datetime timestamp
+    }
+
+    PLAGIARISM_REPORT {
+        int id PK
+        string session_id FK
+        float similarity_score
+        int corpus_count
+        datetime executed_at
+    }
+
+    COMPARISON_REPORT {
+        int id PK
+        string session_id FK
+        string target_paper_name
+        string model_used
+        text ai_analysis_text
+    }

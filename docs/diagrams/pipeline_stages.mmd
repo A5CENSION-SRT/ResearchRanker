@@ -1,0 +1,32 @@
+graph LR
+    subgraph Stage1 ["Stage 1: Document Ingestion"]
+        S1A["Upload PDF"] --> S1B["PyMuPDF Stream Parsing"]
+        S1B --> S1C["Normalized Text Extraction"]
+    end
+
+    subgraph Stage2 ["Stage 2: Feature Fingerprinting"]
+        S2A["Page Layout Extraction"] --> S2B["Section Hierarchy Match"]
+        S2B --> S2C["Font & Margin Verification"]
+    end
+
+    subgraph Stage3 ["Stage 3: Multi-Agent Analysis"]
+        S3A["Ollama LLM Prompts"] --> S3B["Methodology Comparison"]
+        S3B --> S3C["Structural Scoring Algorithm"]
+        S3C --> S3D["Grammar Diagnostic Engine"]
+    end
+
+    subgraph Stage4 ["Stage 4: Corpus Validation"]
+        S4A["Title Generation"] --> S4B["CORE AC API Retrieval"]
+        S4B --> S4C["S-BERT Vector Encoding"]
+        S4C --> S4D["Cosine Similarity Matrix"]
+    end
+
+    Stage1 --> Stage2
+    Stage2 --> Stage3
+    Stage3 --> Stage4
+
+    %% Styling
+    style Stage1 fill:#dbeafe,stroke:#1e40af,stroke-width:2px
+    style Stage2 fill:#f3e8ff,stroke:#6b21a8,stroke-width:2px
+    style Stage3 fill:#fef3c7,stroke:#b45309,stroke-width:2px
+    style Stage4 fill:#dcfce7,stroke:#15803d,stroke-width:2px

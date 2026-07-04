@@ -104,7 +104,7 @@ def home():
 
     response = ollama.generate(model="gemma3:1b", prompt="give one qoute about research given by a great person in 1-2 lines dont give author name or anything else, ONLY QUOTE",stream=False)['response']
     
-    return render_template("index.html", logged_in=logged_in, username=username,thought=response,title="ResearchRankers",css_path='style-index')
+    return render_template("index.html", logged_in=logged_in, username=username,thought=response,title="ResearchRanker",css_path='style-index')
 
 @app.route("/signup", methods=['GET', 'POST'])
 def signup():
@@ -148,7 +148,7 @@ def signup():
         flash('Account created successfully!')
         return redirect(url_for('home'))
     
-    return render_template("signup.html", title="ResearchRankers-Sign Up", css_path='style-signup')
+    return render_template("signup.html", title="ResearchRanker - Sign Up", css_path='style-signup')
 
 @app.route("/login", methods=['GET', 'POST'])
 def login():
@@ -163,7 +163,7 @@ def login():
         if not user or not user.check_password(password):
             flash('Invalid email or password. Please try again.')
             # Stay on login form rather than redirecting to signup
-            return render_template("signup.html", title="ResearchRankers-Login", css_path='style-signup')
+            return render_template("signup.html", title="ResearchRanker - Login", css_path='style-signup')
         
         # Set session variables
         session['logged_in'] = True
@@ -174,7 +174,7 @@ def login():
         return redirect(url_for('home'))
     
     # For GET requests, show the signup page (which contains the login form)
-    return render_template("signup.html", title="ResearchRankers-Sign In", css_path='style-signup')
+    return render_template("signup.html", title="ResearchRanker - Sign In", css_path='style-signup')
 
 @app.route("/logout")
 def logout():
@@ -189,14 +189,14 @@ def logout():
 def tools():
     logged_in = session.get('logged_in', False)
     username = session.get('username', None)
-    return render_template("tools.html",logged_in=logged_in, username=username,title="ResearchRankers-Tools",css_path='style-tools')
+    return render_template("tools.html",logged_in=logged_in, username=username,title="ResearchRanker - Tools",css_path='style-tools')
     
 @app.route("/compare")
 def compare():
     ai_result = session.get('ai_result_compare', None)
     logged_in = session.get('logged_in', False)
     username = session.get('username', None)
-    return render_template("compare.html",logged_in=logged_in, username=username,title="ResearchRankers-Compare",css_path='style-compare',ai_result=ai_result)
+    return render_template("compare.html",logged_in=logged_in, username=username,title="ResearchRanker - Compare",css_path='style-compare',ai_result=ai_result)
 
 #Uploading files for compare
 @app.route("/compare-papers",methods=['POST'])
@@ -234,7 +234,7 @@ def templatechecker():
     logged_in = session.get('logged_in', False)
     username = session.get('username', None)
     ai_result = session.get('ai_result_template', None)
-    return render_template("template-checker.html",logged_in=logged_in, username=username,title="ResearchRankers-Template_checking",css_path='style-template-checker',ai_result=ai_result)
+    return render_template("template-checker.html",logged_in=logged_in, username=username,title="ResearchRanker - Template Checking",css_path='style-template-checker',ai_result=ai_result)
 
 
 #Uploading files for templatechecker
@@ -270,7 +270,7 @@ def check_template():
 def grammercorrect():
     logged_in = session.get('logged_in', False)
     username = session.get('username', None)
-    return render_template("grammer-correct.html",logged_in=logged_in, username=username,title="ResearchRankers-Grammer_Correction",css_path='style-grammer-correction')
+    return render_template("grammer-correct.html",logged_in=logged_in, username=username,title="ResearchRanker - Grammar Correction",css_path='style-grammer-correction')
 
 @app.route("/check-grammer")
 def checkgrammer():
@@ -293,7 +293,7 @@ def plagarism():
     logged_in = session.get('logged_in', False)
     username = session.get('username', None)
     plagarism_result =  session.get('plagarism_result',None)
-    return render_template("plagarism.html",logged_in=logged_in, username=username,title="ResearchRankers-Plagarism",css_path='style-plagarism', plagarism_result=plagarism_result)
+    return render_template("plagarism.html",logged_in=logged_in, username=username,title="ResearchRanker - Plagiarism Checker",css_path='style-plagarism', plagarism_result=plagarism_result)
     
 
 @app.route('/check-plagarism',methods=['POST'])

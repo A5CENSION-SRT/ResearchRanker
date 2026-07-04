@@ -1,0 +1,60 @@
+graph TB
+    %% Nodes
+    subgraph ClientTier ["Client & Web Tier"]
+        UI["Web Browser User Interface<br/>(Jinja2 HTML5 / Bootstrap 5 / Vanilla CSS)"]
+        AUTH["Authentication Controller<br/>(Google OAuth2 / Flask Session)"]
+    end
+
+    subgraph ApplicationTier ["Application Server Layer (Flask App)"]
+        APP["Flask Application Engine<br/>(app.py - Routing & Context)"]
+        FORM["Input Validator & Forms<br/>(WTForms / Werkzeug)"]
+        READER["PDF Extractor Module<br/>(PyMuPDF / pdfplumber)"]
+        COMPARE["Comparative Analyzer Module<br/>(utils/comparison.py)"]
+        GRAMMAR["Grammar Diagnostic Engine<br/>(utils/grammar.py / LanguageTool)"]
+        PLAG["Plagiarism Engine<br/>(utils/plagiarism_detector.py)"]
+    end
+
+    subgraph IntelligentServices ["Intelligent AI & External Services"]
+        OLLAMA["Local LLM Inference Engine<br/>(Ollama: Gemma3 / Phi4 / DeepSeek R1)"]
+        CORE["CORE AC API Service<br/>(v3 REST Endpoint)"]
+        SBERT["S-BERT Vector Engine<br/>(all-MiniLM-L6-v2 Embeddings)"]
+    end
+
+    subgraph PersistenceTier ["Persistence & Data Store"]
+        DB[("SQLite Database<br/>(Users.db - SQLAlchemy ORM)")]
+        FS["Local Upload Directory<br/>(static/uploads)"]
+    end
+
+    %% Connections
+    UI -->|HTTP Requests| APP
+    APP --> AUTH
+    AUTH -->|User Credentials / Tokens| DB
+    APP --> FORM
+    APP --> FS
+    APP --> READER
+    READER --> COMPARE
+    READER --> GRAMMAR
+    READER --> PLAG
+
+    COMPARE -->|Ollama API Prompts| OLLAMA
+    GRAMMAR -->|LanguageTool Rules & LLM| OLLAMA
+    PLAG -->|Metadata Query| CORE
+    PLAG -->|Vector Embeddings| SBERT
+    OLLAMA -->|Analysis Output| APP
+    SBERT -->|Similarity Score| APP
+    APP -->|Rendered Response| UI
+
+    %% Styling
+    style UI fill:#dbeafe,stroke:#1e40af,stroke-width:2px
+    style AUTH fill:#dbeafe,stroke:#1e40af,stroke-width:2px
+    style APP fill:#f3e8ff,stroke:#6b21a8,stroke-width:2px
+    style FORM fill:#f3e8ff,stroke:#6b21a8,stroke-width:2px
+    style READER fill:#f3e8ff,stroke:#6b21a8,stroke-width:2px
+    style COMPARE fill:#fef3c7,stroke:#b45309,stroke-width:2px
+    style GRAMMAR fill:#fef3c7,stroke:#b45309,stroke-width:2px
+    style PLAG fill:#fef3c7,stroke:#b45309,stroke-width:2px
+    style OLLAMA fill:#dcfce7,stroke:#15803d,stroke-width:2px
+    style CORE fill:#dcfce7,stroke:#15803d,stroke-width:2px
+    style SBERT fill:#dcfce7,stroke:#15803d,stroke-width:2px
+    style DB fill:#ffe4e6,stroke:#be123c,stroke-width:2px
+    style FS fill:#ffe4e6,stroke:#be123c,stroke-width:2px
