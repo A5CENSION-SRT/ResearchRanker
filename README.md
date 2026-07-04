@@ -16,8 +16,7 @@
 
 - [Overview](#overview)
 - [Key Architectural Features](#key-architectural-features)
-- [System Architecture & Pipeline](#system-architecture--pipeline)
-- [System Sequence Flow & ER Schema](#system-sequence-flow--er-schema)
+- [System Architecture & Data Flow Diagrams](#system-architecture--data-flow-diagrams)
 - [Repository Layout](#repository-layout)
 - [Prerequisites & Installation](#prerequisites--installation)
 - [Configuration & Environment Setup](#configuration--environment-setup)
@@ -37,7 +36,7 @@ By unifying local open-weight Large Language Models (executed via Ollama) with d
 
 ## Key Architectural Features
 
-- **Methodological Paper Comparison**: Upload draft PDFs alongside reference IEEE publications to extract and compare research objectives, computational efficiency, and methodology novelty using local models (`Phi4` / `Gemma 3`).
+- **Methodological Paper Comparison**: Upload draft PDFs alongside reference IEEE publications to extract and compare research objectives, computational efficiency, and methodology novelty using local models (`Phi4` / `GeArchivedmma 3`).
 - **Template Compliance Checker**: Evaluate document formatting, section nesting hierarchy, column alignment, font consistency, and margin compliance against target templates.
 - **Semantic Plagiarism Engine**: Extract paper titles using LLMs, fetch matching open-access publications via the CORE AC API, and calculate pairwise sentence cosine similarity using S-BERT vector embeddings.
 - **Grammar & Style Diagnostic Engine**: Analyze PDF text streams with LanguageTool and local LLMs to generate page-level error reports and actionable revision suggestions.
@@ -45,31 +44,32 @@ By unifying local open-weight Large Language Models (executed via Ollama) with d
 
 ---
 
-## System Architecture & Pipeline
+## System Architecture & Data Flow Diagrams
 
-### High-Level Multi-Tier Architecture
+### 1. High-Level Multi-Tier System Architecture
 
 ![System Architecture](file:///home/snehal-reddy/Coding/Repositories/ResearchRanker/docs/diagrams/system_architecture.png)
-*Figure 1: Multi-Tier High-Level System Architecture. Source: [system_architecture.mmd](file:///home/snehal-reddy/Coding/Repositories/ResearchRanker/docs/diagrams/system_architecture.mmd). Master Specification: [DIAGRAMS.md](file:///home/snehal-reddy/Coding/Repositories/ResearchRanker/DIAGRAMS.md).*
+*Figure 1: High-Level Multi-Tier System Architecture detailing web, application, local Ollama LLM, CORE API, S-BERT, and SQLite storage layers. Source: [system_architecture.mmd](file:///home/snehal-reddy/Coding/Repositories/ResearchRanker/docs/diagrams/system_architecture.mmd). Master Specification: [DIAGRAMS.md](file:///home/snehal-reddy/Coding/Repositories/ResearchRanker/DIAGRAMS.md).*
 
-### Multi-Agent Analysis Pipeline Stages
+### 2. Multi-Agent PDF Analysis Pipeline Stages
 
 ![Pipeline Stages](file:///home/snehal-reddy/Coding/Repositories/ResearchRanker/docs/diagrams/pipeline_stages.png)
-*Figure 2: Multi-Stage PDF Ingestion and Multi-Agent Processing Pipeline. Source: [pipeline_stages.mmd](file:///home/snehal-reddy/Coding/Repositories/ResearchRanker/docs/diagrams/pipeline_stages.mmd). Master Specification: [DIAGRAMS.md](file:///home/snehal-reddy/Coding/Repositories/ResearchRanker/DIAGRAMS.md).*
+*Figure 2: Four-stage PDF ingestion, structural feature fingerprinting, multi-agent analysis, and corpus validation pipeline. Source: [pipeline_stages.mmd](file:///home/snehal-reddy/Coding/Repositories/ResearchRanker/docs/diagrams/pipeline_stages.mmd). Master Specification: [DIAGRAMS.md](file:///home/snehal-reddy/Coding/Repositories/ResearchRanker/DIAGRAMS.md).*
 
----
-
-## System Sequence Flow & ER Schema
-
-### End-to-End Execution Sequence Flow
+### 3. End-to-End Execution Sequence Flow
 
 ![Sequence Flow](file:///home/snehal-reddy/Coding/Repositories/ResearchRanker/docs/diagrams/sequence_flow.png)
-*Figure 3: System Sequence Diagram detailing user interaction, PDF extraction, CORE API queries, and LLM inference. Source: [sequence_flow.mmd](file:///home/snehal-reddy/Coding/Repositories/ResearchRanker/docs/diagrams/sequence_flow.mmd). Master Specification: [DIAGRAMS.md](file:///home/snehal-reddy/Coding/Repositories/ResearchRanker/DIAGRAMS.md).*
+*Figure 3: End-to-end sequence diagram tracing paper upload, text extraction, CORE API search, Ollama inference, and plagiarism scoring. Source: [sequence_flow.mmd](file:///home/snehal-reddy/Coding/Repositories/ResearchRanker/docs/diagrams/sequence_flow.mmd). Master Specification: [DIAGRAMS.md](file:///home/snehal-reddy/Coding/Repositories/ResearchRanker/DIAGRAMS.md).*
 
-### Relational Database ER Schema
+### 4. Relational Database ER Schema
 
 ![Database ER Schema](file:///home/snehal-reddy/Coding/Repositories/ResearchRanker/docs/diagrams/er_schema.png)
-*Figure 4: Relational SQLite Entity-Relationship Diagram. Source: [er_schema.mmd](file:///home/snehal-reddy/Coding/Repositories/ResearchRanker/docs/diagrams/er_schema.mmd). Master Specification: [DIAGRAMS.md](file:///home/snehal-reddy/Coding/Repositories/ResearchRanker/DIAGRAMS.md).*
+*Figure 4: Relational SQLite Entity-Relationship Diagram (`User`, `OAuth`, `AnalysisSession`, `PlagiarismReport`, `ComparisonReport`). Source: [er_schema.mmd](file:///home/snehal-reddy/Coding/Repositories/ResearchRanker/docs/diagrams/er_schema.mmd). Master Specification: [DIAGRAMS.md](file:///home/snehal-reddy/Coding/Repositories/ResearchRanker/DIAGRAMS.md).*
+
+### 5. Automated Data Ingestion & Plagiarism Pipeline
+
+![Data Ingestion Pipeline](file:///home/snehal-reddy/Coding/Repositories/ResearchRanker/docs/diagrams/data_ingestion.png)
+*Figure 5: Automated title extraction, CORE AC search, PDF stream fetching, and S-BERT vector cosine matrix similarity pipeline. Source: [data_ingestion.mmd](file:///home/snehal-reddy/Coding/Repositories/ResearchRanker/docs/diagrams/data_ingestion.mmd). Master Specification: [DIAGRAMS.md](file:///home/snehal-reddy/Coding/Repositories/ResearchRanker/DIAGRAMS.md).*
 
 ---
 
